@@ -1,0 +1,1146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1920, initial-scale=1">
+<title>Obsession Pizza — Digital Menu</title>
+
+<!-- ============================================================ -->
+<!--  OBSESSION PIZZA · DIGITAL MENU FOR 50" TV DISPLAYS           -->
+<!--  Built to brand guidelines (Nov 2025 Brandbook)               -->
+<!--                                                                -->
+<!--  Brand palette:                                                -->
+<!--    Marinara Red   #E90000                                      -->
+<!--    Smoke Black    #000000                                      -->
+<!--    Dough White    #FFFFFF                                      -->
+<!--    Red Bright     #FF5E5E                                      -->
+<!--    Red Deep       #9E0000                                      -->
+<!--    Gray Light     #A5A7B5                                      -->
+<!--    Gray Dark      #41424B                                      -->
+<!--                                                                -->
+<!--  Typography:                                                   -->
+<!--    Headlines   Oswald                                          -->
+<!--    Subheads    Barlow Condensed (Akzidenz Grotesk fallback)    -->
+<!--    Body        Inter Tight                                     -->
+<!--                                                                -->
+<!--  USAGE                                                         -->
+<!--    ?screen=1   Pizzas + Calzones (4 slides)                    -->
+<!--    ?screen=2   Empanadas + Appetizers + Salads (4 slides)      -->
+<!--    ?screen=3   Desserts + Coffee + Beverages (5 slides)        -->
+<!--    no param    All 13 slides loop                              -->
+<!--                                                                -->
+<!--  Search "PLACEHOLDER" to find prices the owner still needs     -->
+<!--  to confirm (all currently set to $15.00).                     -->
+<!-- ============================================================ -->
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Oswald:wght@200;300;400;500;600;700&family=Barlow+Condensed:wght@300;400;500;600;700&family=Inter+Tight:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    /* Brand primary */
+    --marinara: #E90000;
+    --smoke: #000000;
+    --dough: #FFFFFF;
+    /* Brand expanded */
+    --red-bright: #FF5E5E;
+    --red-deep: #9E0000;
+    --gray-light: #A5A7B5;
+    --gray-dark: #41424B;
+    /* Working tones */
+    --black-soft: #0a0a0a;
+    --black-card: #141414;
+    --dough-dim: rgba(255,255,255,0.65);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    width: 1920px;
+    height: 1080px;
+    overflow: hidden;
+    background: var(--smoke);
+    color: var(--dough);
+    font-family: 'Inter Tight', sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body { transform-origin: top left; }
+
+  /* Background: smoke black with subtle radial energy */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 100%, rgba(233,0,0,0.12) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 0% 0%, rgba(233,0,0,0.06) 0%, transparent 50%);
+    z-index: -2;
+  }
+
+  .slide {
+    position: absolute;
+    inset: 0;
+    padding: 56px 72px;
+    display: none;
+    flex-direction: column;
+    animation: slideIn 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  .slide.active { display: flex; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ============ LOGO (recreated in CSS per brandbook) ============ */
+  .logo {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1;
+  }
+  .logo-word {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 56px;
+    color: var(--marinara);
+    letter-spacing: -0.01em;
+    line-height: 0.85;
+  }
+  .logo-pizza {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 14px;
+    color: var(--dough);
+    letter-spacing: 0.85em;
+    margin-left: 0.85em; /* compensates last-letter tracking */
+    margin-top: 6px;
+    text-transform: uppercase;
+  }
+
+  /* ============ HEADER ============ */
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 24px;
+    border-bottom: 2px solid var(--marinara);
+    margin-bottom: 32px;
+  }
+
+  .header-tagline {
+    text-align: right;
+  }
+
+  .eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.5em;
+    color: var(--marinara);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .category-title {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 76px;
+    color: var(--dough);
+    line-height: 0.9;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  .category-title em {
+    font-style: normal;
+    color: var(--marinara);
+  }
+
+  /* ============ GRID LAYOUTS ============ */
+  .grid-content {
+    flex: 1;
+    display: grid;
+    gap: 24px;
+  }
+
+  .grid-2x2 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .grid-3x2 { grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; }
+  .grid-4col { grid-template-columns: repeat(4, 1fr); grid-template-rows: 1fr 1fr; }
+
+  /* ============ ITEM CARD ============ */
+  .item {
+    background: var(--black-card);
+    border-left: 4px solid var(--marinara);
+    padding: 26px 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+  }
+
+  .item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 10px;
+  }
+
+  .item-name {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 34px;
+    color: var(--dough);
+    line-height: 1;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  .signature-tag {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+    color: var(--marinara);
+    border: 1.5px solid var(--marinara);
+    padding: 3px 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-left: 10px;
+    vertical-align: middle;
+    line-height: 1;
+  }
+
+  .item-desc {
+    font-family: 'Inter Tight', sans-serif;
+    font-weight: 400;
+    font-size: 19px;
+    color: var(--dough-dim);
+    line-height: 1.3;
+    margin-bottom: 14px;
+  }
+
+  .item-prices {
+    display: flex;
+    gap: 28px;
+    align-items: baseline;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .price-block {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .price-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    color: var(--gray-light);
+    text-transform: uppercase;
+    margin-bottom: 2px;
+  }
+
+  .price-value {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 42px;
+    color: var(--marinara);
+    line-height: 1;
+  }
+
+  .price-single {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 52px;
+    color: var(--marinara);
+    line-height: 1;
+  }
+
+  /* Empanada-style shared pricing banner */
+  .pricing-banner {
+    background: var(--marinara);
+    padding: 18px 40px;
+    margin-bottom: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 60px;
+    position: relative;
+  }
+
+  .pricing-banner-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    letter-spacing: 0.3em;
+    color: var(--dough);
+    text-transform: uppercase;
+  }
+
+  .pricing-banner-tier {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+
+  .pricing-banner-qty {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 32px;
+    color: var(--dough);
+  }
+
+  .pricing-banner-price {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 42px;
+    color: var(--smoke);
+  }
+
+  /* Compact item variant */
+  .item-compact { padding: 20px 24px; }
+  .item-compact .item-name { font-size: 26px; }
+  .item-compact .item-desc { font-size: 16px; line-height: 1.25; margin-bottom: 10px; }
+  .item-compact .price-value { font-size: 32px; }
+  .item-compact .price-single { font-size: 38px; }
+  .item-compact .item-prices { padding-top: 10px; gap: 18px; }
+
+  /* ============ FOOTER ============ */
+  .footer {
+    margin-top: 24px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
+
+  .footer-info {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 18px;
+    color: var(--gray-light);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .footer-handle {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 600;
+    font-size: 22px;
+    color: var(--marinara);
+    letter-spacing: 0.15em;
+  }
+
+  /* Progress dots */
+  .progress {
+    position: fixed;
+    bottom: 22px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 50;
+  }
+
+  .progress-dot {
+    width: 6px;
+    height: 6px;
+    background: rgba(255,255,255,0.2);
+    transition: all 0.4s;
+  }
+
+  .progress-dot.active {
+    background: var(--marinara);
+    width: 40px;
+  }
+
+  /* ============ BRAND SLIDE ============ */
+  .brand-slide {
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: linear-gradient(180deg, var(--smoke) 0%, var(--red-deep) 200%);
+  }
+
+  .brand-slide .hero-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 500;
+    font-size: 24px;
+    letter-spacing: 0.8em;
+    color: var(--marinara);
+    text-transform: uppercase;
+    margin-bottom: 50px;
+  }
+
+  .brand-slide .hero-mark {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 280px;
+    line-height: 0.85;
+    color: var(--marinara);
+    letter-spacing: -0.03em;
+    text-transform: none;
+  }
+
+  .brand-slide .hero-pizza {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 300;
+    font-size: 64px;
+    color: var(--dough);
+    letter-spacing: 0.85em;
+    margin-left: 0.85em;
+    text-transform: uppercase;
+    margin-top: 16px;
+    margin-bottom: 60px;
+  }
+
+  .brand-slide .hero-tagline {
+    font-family: 'Oswald', sans-serif;
+    font-weight: 700;
+    font-size: 72px;
+    color: var(--dough);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    line-height: 1.05;
+  }
+
+  .brand-slide .hero-tagline em {
+    font-style: normal;
+    color: var(--marinara);
+  }
+
+  .brand-slide .hero-sub {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-weight: 400;
+    font-size: 26px;
+    color: var(--gray-light);
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    margin-top: 40px;
+  }
+
+  /* Wing card double-width helper */
+  .span-2 { grid-column: span 2; }
+  .span-3 { grid-column: span 3; }
+
+  /* Highlight card variant (kids menu, beers, etc.) */
+  .item-highlight {
+    background: linear-gradient(135deg, var(--marinara) 0%, var(--red-deep) 100%);
+    border-left-color: var(--smoke);
+  }
+  .item-highlight .item-name,
+  .item-highlight .item-desc,
+  .item-highlight .price-value,
+  .item-highlight .price-single,
+  .item-highlight .price-label {
+    color: var(--dough);
+  }
+  .item-highlight .item-desc { color: rgba(255,255,255,0.9); }
+  .item-highlight .item-prices { border-top-color: rgba(255,255,255,0.25); }
+  .item-highlight .signature-tag {
+    color: var(--dough);
+    border-color: var(--dough);
+  }
+</style>
+</head>
+<body>
+
+<div class="progress" id="progress"></div>
+
+<!-- ============================================================ -->
+<!--   SCREEN 1 — PIZZAS + CALZONES                                -->
+<!-- ============================================================ -->
+
+<!-- SLIDE 1.1 — Classic Pizzas -->
+<div class="slide" data-screen="1">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Buenos Aires Style · Chapter I</div>
+      <div class="category-title"><em>Classic</em> Pizzas</div>
+    </div>
+  </div>
+  <div class="grid-content grid-2x2">
+    <div class="item">
+      <div class="item-header"><div class="item-name">Mozzarella Porteña</div></div>
+      <div class="item-desc">Thick pan-style crust loaded with tomato sauce, bubbling mozzarella, oregano and green olives — a true Buenos Aires classic.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$12.95</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$23.90</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Pepperoni</div></div>
+      <div class="item-desc">Our signature porteño crust topped with melted mozzarella, crispy pepperoni and a touch of parmesan.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$14.85</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$25.50</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Four Cheese</div></div>
+      <div class="item-desc">Rich and indulgent blend of four cheeses melted over our signature crust — creamy, bold, unmistakably porteño.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$15.75</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$28.80</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Ham &amp; Peppers</div></div>
+      <div class="item-desc">Classic combination of ham and roasted red peppers over melted mozzarella on our thick Buenos Aires crust.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$15.75</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$28.80</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Medium 10" · 4 Slices  /  Big 15" · 8 Slices</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 1.2 — Signature Pizzas -->
+<div class="slide" data-screen="1">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Buenos Aires Style · Chapter II</div>
+      <div class="category-title"><em>Signature</em> Pizzas</div>
+    </div>
+  </div>
+  <div class="grid-content grid-2x2">
+    <div class="item">
+      <div class="item-header"><div class="item-name">Fugazzeta</div></div>
+      <div class="item-desc">Stuffed pizza filled with melted cheese, topped with sweet onions and a drizzle of olive oil — inspired by Buenos Aires' most iconic pizzerias.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$18.75</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$35.80</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Obsession <span class="signature-tag">Signature</span></div></div>
+      <div class="item-desc">Mozzarella, ham, fresh tomatoes, roasted peppers and eggs, finished with herbs and olive oil — bold, rich, unforgettable.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$18.75</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$35.80</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Prosciutto &amp; Arugula</div></div>
+      <div class="item-desc">Crispy cheesy base finished with prosciutto, fresh arugula and shaved parmesan for a perfectly balanced bite.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$17.75</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$31.80</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Bacon &amp; Eggs</div></div>
+      <div class="item-desc">A true Buenos Aires classic loaded with bubbling mozzarella, crispy pancetta and freshly baked eggs over our signature thick crust.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10" · 4 sl</div><div class="price-value">$15.75</div></div>
+        <div class="price-block"><div class="price-label">Big · 15" · 8 sl</div><div class="price-value">$28.80</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Bold · Authentic · Disruptive</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 1.3 — Veggie + Calzones -->
+<div class="slide" data-screen="1">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Veggie · Calzones</div>
+      <div class="category-title"><em>Garden</em> &amp; Folded</div>
+    </div>
+  </div>
+  <div class="grid-content grid-3x2">
+    <div class="item" style="grid-row: span 2;">
+      <div class="item-header"><div class="item-name">Veggie Garden</div></div>
+      <div class="item-desc">A vibrant mix of roasted vegetables — eggplant, red &amp; green bell peppers, mushrooms, red onion, scallions — over melted mozzarella, finished with a touch of pesto on our signature crust.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Medium · 10"</div><div class="price-value">$15.75</div></div>
+        <div class="price-block"><div class="price-label">Big · 15"</div><div class="price-value">$28.80</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Calabrese <span class="signature-tag">Calzone</span></div></div>
+      <div class="item-desc">Golden baked calzone stuffed with mozzarella, Calabrian sausage and pepperoni — bold, juicy, packed with flavor.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Grande</div><div class="price-single">$29.00</div></div>
+      </div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Obsession <span class="signature-tag">Calzone</span></div></div>
+      <div class="item-desc">Mozzarella, ham, red &amp; green peppers, egg and green olives — rich, savory, fully loaded.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Grande</div><div class="price-single">$15.00</div></div>
+      </div>
+    </div>
+    <div class="item span-2 item-highlight">
+      <div class="item-header" style="margin-bottom: 0;">
+        <div>
+          <div class="item-name">Taste. Desire. Repeat.</div>
+          <div class="item-desc" style="margin-top: 10px; margin-bottom: 0; font-size: 21px;">Ask our team about custom pies, vegan cheese options and gluten-friendly preparations. We adapt to your table.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Calzones available in Grande size only</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 1.4 — Brand Interlude -->
+<div class="slide brand-slide" data-screen="1">
+  <div class="hero-eyebrow">Obsessed From The First Bite</div>
+  <div class="hero-mark">Obsession</div>
+  <div class="hero-pizza">PIZZA</div>
+  <div class="hero-tagline">Taste. <em>Desire.</em> Repeat.</div>
+  <div class="hero-sub">Buenos Aires Style · Wood Fired · Hand Made</div>
+</div>
+
+<!-- ============================================================ -->
+<!--   SCREEN 2 — EMPANADAS + APPETIZERS + SALADS                  -->
+<!-- ============================================================ -->
+
+<!-- SLIDE 2.1 — Classic Empanadas -->
+<div class="slide" data-screen="2">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Argentine Tradition</div>
+      <div class="category-title"><em>Classic</em> Empanadas</div>
+    </div>
+  </div>
+
+  <div class="pricing-banner">
+    <div class="pricing-banner-label">Buy More, Save More</div>
+    <div class="pricing-banner-tier"><span class="pricing-banner-qty">1×</span><span class="pricing-banner-price">$4.00</span></div>
+    <div class="pricing-banner-tier"><span class="pricing-banner-qty">6×</span><span class="pricing-banner-price">$23.50</span></div>
+    <div class="pricing-banner-tier"><span class="pricing-banner-qty">12×</span><span class="pricing-banner-price">$46.00</span></div>
+  </div>
+
+  <div class="grid-content grid-2x2">
+    <div class="item">
+      <div class="item-header"><div class="item-name">Beef</div></div>
+      <div class="item-desc">Traditional Argentine empanadas filled with slow-cooked beef, onions and spices, finished with chopped egg — juicy, rich, full of flavor in every bite.</div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Spicy Beef</div></div>
+      <div class="item-desc">Bold flavorful version of our classic beef empanadas with a spicy kick — perfectly balanced, irresistibly juicy.</div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Slow-Roasted Pork</div></div>
+      <div class="item-desc">Tender slow-roasted pork shoulder, hand-shredded and cooked with onions, egg and traditional spices, wrapped in golden baked dough.</div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Chicken</div></div>
+      <div class="item-desc">Tender shredded chicken mixed with onions, eggs and spices, wrapped in golden baked dough — light, juicy, comforting.</div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Baked, not fried · Made fresh daily</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 2.2 — Gourmet Empanadas -->
+<div class="slide" data-screen="2">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Gourmet Selection</div>
+      <div class="category-title"><em>Premium</em> Empanadas</div>
+    </div>
+  </div>
+
+  <div class="pricing-banner">
+    <div class="pricing-banner-label">Buy More, Save More</div>
+    <div class="pricing-banner-tier"><span class="pricing-banner-qty">1×</span><span class="pricing-banner-price">$4.00</span></div>
+    <div class="pricing-banner-tier"><span class="pricing-banner-qty">6×</span><span class="pricing-banner-price">$23.50</span></div>
+    <div class="pricing-banner-tier"><span class="pricing-banner-qty">12×</span><span class="pricing-banner-price">$46.00</span></div>
+  </div>
+
+  <div class="grid-content grid-2x2">
+    <div class="item">
+      <div class="item-header"><div class="item-name">Pepperoni &amp; Mozzarella</div></div>
+      <div class="item-desc">A pizza-inspired favorite filled with melted mozzarella and pepperoni — cheesy, crispy, incredibly satisfying.</div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Roquefort &amp; Walnut</div></div>
+      <div class="item-desc">A gourmet combination of bold Roquefort cheese, mozzarella, celery and walnuts — rich, creamy, slightly crunchy.</div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Caprese</div></div>
+      <div class="item-desc">A fresh classic combination of mozzarella, tomatoes and basil — simple, light, full of Italian flavor.</div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Spinach &amp; Cheese</div></div>
+      <div class="item-desc">Golden baked empanadas filled with creamy mozzarella, fresh spinach, roasted red peppers, onions and egg — rich, savory, perfectly balanced.</div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Gourmet flavors · Crafted for bold palates</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 2.3 — Appetizers + Wings -->
+<div class="slide" data-screen="2">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">To Start · Wings · Tenders</div>
+      <div class="category-title"><em>Appetizers</em></div>
+    </div>
+  </div>
+  <div class="grid-content grid-3x2">
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Garlic Knots</div></div>
+      <div class="item-desc">Freshly baked knots of pizza dough tossed in garlic butter &amp; herbs, served with marinara.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">6 pcs</div><div class="price-value">$4.89</div></div>
+        <div class="price-block"><div class="price-label">10 pcs</div><div class="price-value">$7.99</div></div>
+      </div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Mozzarella Sticks Jumbo</div></div>
+      <div class="item-desc">Crispy golden long sticks with a gooey center, served with our house marinara.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">6</div><div class="price-value">$8.85</div></div>
+        <div class="price-block"><div class="price-label">9</div><div class="price-value">$11.85</div></div>
+        <div class="price-block"><div class="price-label">12</div><div class="price-value">$14.45</div></div>
+      </div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Chicken Tenders</div></div>
+      <div class="item-desc">Crispy golden tenders, juicy inside, perfectly seasoned, served with house dipping sauces.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">4 pcs</div><div class="price-value">$8.99</div></div>
+        <div class="price-block"><div class="price-label">8 pcs</div><div class="price-value">$15.99</div></div>
+      </div>
+    </div>
+    <div class="item item-compact span-3 item-highlight">
+      <div class="item-header" style="margin-bottom: 8px;">
+        <div class="item-name">Wings <span class="signature-tag">3 Flavors</span></div>
+      </div>
+      <div class="item-desc">Honey BBQ — sweet, smoky, caramelized. &nbsp;·&nbsp; Buffalo — bold, spicy, classic. &nbsp;·&nbsp; Garlic Parmesan — buttery, herbed, finished with shaved parmesan.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">6 pcs</div><div class="price-value">$12.00</div></div>
+        <div class="price-block"><div class="price-label">9 pcs</div><div class="price-value">$14.75</div></div>
+        <div class="price-block"><div class="price-label">12 pcs</div><div class="price-value">$17.50</div></div>
+        <div class="price-block"><div class="price-label">30 pcs</div><div class="price-value">$39.50</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Perfect to share · Mix and match flavors</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 2.4 — Salads + Kids Menu -->
+<div class="slide" data-screen="2">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Salads · Little Obsession</div>
+      <div class="category-title"><em>Fresh</em> &amp; Kids</div>
+    </div>
+  </div>
+  <div class="grid-content grid-3x2">
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Classic Caesar</div></div>
+      <div class="item-desc">Crisp romaine tossed in creamy Caesar dressing, topped with shaved parmesan and crunchy croutons.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Add grilled chicken +$2</div><div class="price-single">$18.50</div></div>
+      </div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Mediterranean Arugula</div></div>
+      <div class="item-desc">Fresh arugula topped with prosciutto, shaved parmesan and black olives, finished with light lemon vinaigrette.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Add extra prosciutto +$3</div><div class="price-single">$22.00</div></div>
+      </div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Obsession <span class="signature-tag">Signature</span></div></div>
+      <div class="item-desc">Fresh mix of greens with cherry tomatoes, fresh mozzarella, olives, red onion, finished with balsamic glaze and extra virgin olive oil.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">+ Chicken $2  ·  + Prosciutto $3</div><div class="price-single">$15.00</div></div>
+      </div>
+    </div>
+    <div class="item item-compact span-3 item-highlight">
+      <div class="item-header" style="margin-bottom: 6px;">
+        <div class="item-name">Little Obsession <span class="signature-tag">Kids Menu</span></div>
+      </div>
+      <div class="item-desc" style="font-size: 19px; margin-bottom: 10px;">
+        Mini Cheese Pizza  ·  Chicken Tenders Bites  ·  Mini Cheese Bites  ·  Kids Sweet Treat
+      </div>
+      <div class="item-prices">
+        <div class="price-block">
+          <div class="price-label">Includes small drink — Coca-Cola, Juice or Water</div>
+          <div class="price-single">$10.99</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">For the little ones · Drink included</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- ============================================================ -->
+<!--   SCREEN 3 — DESSERTS + COFFEE + BEVERAGES                    -->
+<!-- ============================================================ -->
+
+<!-- SLIDE 3.1 — Signature Sundaes -->
+<div class="slide" data-screen="3">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Signature Sundaes</div>
+      <div class="category-title"><em>Frozen</em> Obsessions</div>
+    </div>
+  </div>
+  <div class="grid-content grid-2x2">
+    <div class="item">
+      <div class="item-header"><div class="item-name">Oreo Overload</div></div>
+      <div class="item-desc">Creamy soft serve loaded with crushed Oreo cookies and rich chocolate fudge — crunchy, creamy, over the top.</div>
+      <div class="item-prices"><div class="price-block"><div class="price-label">Single</div><div class="price-single">$15.00</div></div></div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Dulce de Leche Crunch</div></div>
+      <div class="item-desc">Smooth soft serve topped with rich dulce de leche and crunchy walnuts — sweet, creamy, perfectly balanced.</div>
+      <div class="item-prices"><div class="price-block"><div class="price-label">Single</div><div class="price-single">$15.00</div></div></div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Nutella Dream</div></div>
+      <div class="item-desc">Soft serve drizzled with Nutella and finished with fresh banana or strawberries — creamy, fruity, indulgent.</div>
+      <div class="item-prices"><div class="price-block"><div class="price-label">Single</div><div class="price-single">$15.00</div></div></div>
+    </div>
+    <div class="item">
+      <div class="item-header"><div class="item-name">Brownie Explosion <span class="signature-tag">Signature</span></div></div>
+      <div class="item-desc">Warm fudgy brownie topped with soft serve and hot chocolate sauce — a hot &amp; cold explosion that melts in every bite.</div>
+      <div class="item-prices"><div class="price-block"><div class="price-label">Single</div><div class="price-single">$12.90</div></div></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Add soft serve to any dessert</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 3.2 — Classic Desserts + Affogato -->
+<div class="slide" data-screen="3">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Desserts · Affogato Line</div>
+      <div class="category-title"><em>Sweet</em> Endings</div>
+    </div>
+  </div>
+  <div class="grid-content grid-3x2">
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Classic Tiramisu</div></div>
+      <div class="item-desc">Espresso-soaked ladyfingers, mascarpone cream, dusting of cocoa.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Dulce de Leche Cannoli</div></div>
+      <div class="item-desc">Crispy cannoli shells filled with silky cream and dulce de leche, finished with pistachios and powdered sugar.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">1 piece</div><div class="price-value">$7.00</div></div>
+        <div class="price-block"><div class="price-label">2 pieces</div><div class="price-value">$12.00</div></div>
+      </div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Classic Cheesecake</div></div>
+      <div class="item-desc">Smooth and creamy cheesecake with a buttery crust — rich and delicate.</div>
+      <div class="item-prices"><div class="price-single">$9.85</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Chocolate Layer Cake</div></div>
+      <div class="item-desc">Moist chocolate cake layered with rich chocolate cream — deep, indulgent.</div>
+      <div class="item-prices"><div class="price-single">$9.85</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Affogato Classic</div></div>
+      <div class="item-desc">Vanilla soft serve "drowned" in a shot of hot espresso — simple, bold, unforgettable.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Affogato Obsession <span class="signature-tag">Signature</span></div></div>
+      <div class="item-desc">Our signature affogato with espresso, soft serve and Nutella — rich, intense, indulgent.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Pair with an espresso · Ask about sharing portions</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 3.3 — Gelato + Milkshakes -->
+<div class="slide" data-screen="3">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Artisan Gelato · Premium Shakes</div>
+      <div class="category-title"><em>Cold</em> Selection</div>
+    </div>
+  </div>
+  <div class="grid-content grid-3x2">
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Classic Gelato</div></div>
+      <div class="item-desc">Chocolate · Vanilla · Stracciatella · Dulce de Leche</div>
+      <div class="item-prices"><div class="price-block"><div class="price-label">Per scoop</div><div class="price-single">$15.00</div></div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Premium Gelato</div></div>
+      <div class="item-desc">Pistachio · Hazelnut · Nutella · Cookies</div>
+      <div class="item-prices"><div class="price-block"><div class="price-label">Per scoop</div><div class="price-single">$15.00</div></div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Fruit Gelato</div></div>
+      <div class="item-desc">Strawberry · Mango · Passion Fruit · Lemon</div>
+      <div class="item-prices"><div class="price-block"><div class="price-label">Per scoop</div><div class="price-single">$15.00</div></div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Oreo Shake</div></div>
+      <div class="item-desc">Thick creamy shake blended with Oreo cookies — smooth, cold, irresistible.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Nutella Shake</div></div>
+      <div class="item-desc">Rich creamy shake blended with Nutella — indulgent, full of chocolate flavor.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Classic Chocolate Shake</div></div>
+      <div class="item-desc">Smooth chocolate milkshake — simple, creamy, timeless.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Soft Serve · Cones &amp; Cups · Vanilla / Chocolate / Swirl</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 3.4 — Coffee + Bakery -->
+<div class="slide" data-screen="3">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Hot Coffee · Iced · Bakery</div>
+      <div class="category-title"><em>Coffee</em> &amp; Pastry</div>
+    </div>
+  </div>
+  <div class="grid-content grid-4col">
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Espresso</div></div>
+      <div class="item-desc">Bold, rich, with a smooth crema.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Cappuccino</div></div>
+      <div class="item-desc">Espresso, steamed milk, silky foam.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Latte</div></div>
+      <div class="item-desc">Espresso blended with steamed milk.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Flat White</div></div>
+      <div class="item-desc">Velvety microfoam over rich espresso.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Mocha</div></div>
+      <div class="item-desc">Espresso, chocolate, steamed milk.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Iced Latte</div></div>
+      <div class="item-desc">Chilled espresso with milk over ice.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Mocha Frappé</div></div>
+      <div class="item-desc">Blended iced coffee with chocolate &amp; whip.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name" style="font-size: 22px;">Vanilla Cold Brew</div></div>
+      <div class="item-desc">Smooth cold brew infused with vanilla.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Pair your coffee with a freshly baked pastry · Croissants · Bagels · Focaccia · Donuts · Muffins · Cookies</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<!-- SLIDE 3.5 — Beverages + Beer + Wine -->
+<div class="slide" data-screen="3">
+  <div class="header">
+    <div class="logo">
+      <div class="logo-word">Obsession</div>
+      <div class="logo-pizza">PIZZA</div>
+    </div>
+    <div class="header-tagline">
+      <div class="eyebrow">Beverages · Bar</div>
+      <div class="category-title"><em>Drinks</em> &amp; Bar</div>
+    </div>
+  </div>
+  <div class="grid-content grid-3x2">
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Soft Drinks</div></div>
+      <div class="item-desc">Coca-Cola · Diet Coke · Coke Zero · Hi-C · Sprite · Fanta · Lemonade · Pibb Xtra</div>
+      <div class="item-prices"><div class="price-single">$3.89</div></div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Water</div></div>
+      <div class="item-desc">Still or sparkling — pure and refreshing.</div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Still</div><div class="price-value">$3.50</div></div>
+        <div class="price-block"><div class="price-label">Sparkling</div><div class="price-value">$3.85</div></div>
+      </div>
+    </div>
+    <div class="item item-compact">
+      <div class="item-header"><div class="item-name">Fresh Juices</div></div>
+      <div class="item-desc">Orange · Apple — fresh and naturally sweet.</div>
+      <div class="item-prices"><div class="price-single">$2.99</div></div>
+    </div>
+    <div class="item item-compact item-highlight">
+      <div class="item-header"><div class="item-name">Beers <span class="signature-tag">On Tap</span></div></div>
+      <div class="item-desc">Ice-cold beers, perfectly paired with our pizzas and appetizers. Ask about today's selection.</div>
+      <div class="item-prices"><div class="price-single">$15.00</div></div>
+    </div>
+    <div class="item item-compact span-2 item-highlight">
+      <div class="item-header" style="margin-bottom: 6px;">
+        <div class="item-name">Wines <span class="signature-tag">Cellar</span></div>
+      </div>
+      <div class="item-desc" style="margin-bottom: 10px;">
+        <strong>Red</strong> — Smooth, rich, full-bodied. Perfect with our pizzas.  &nbsp;·&nbsp;
+        <strong>White</strong> — Crisp, refreshing, ideal for lighter dishes &amp; salads.  &nbsp;·&nbsp;
+        <strong>Rosé</strong> — Light, aromatic, perfectly balanced.
+      </div>
+      <div class="item-prices">
+        <div class="price-block"><div class="price-label">Glass</div><div class="price-value">$15.00</div></div>
+        <div class="price-block"><div class="price-label">Bottle</div><div class="price-value">$15.00</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="footer-info">Ask our team for the full wine list</div>
+    <div class="footer-handle">@OBSESSIONPIZZA</div>
+  </div>
+</div>
+
+<script>
+(function() {
+  // Scale 1920x1080 canvas to fit any TV resolution
+  function fitToScreen() {
+    const scale = Math.min(window.innerWidth / 1920, window.innerHeight / 1080);
+    document.body.style.transform = `scale(${scale})`;
+  }
+  window.addEventListener('resize', fitToScreen);
+  fitToScreen();
+
+  const params = new URLSearchParams(window.location.search);
+  const screenFilter = params.get('screen');
+
+  const allSlides = Array.from(document.querySelectorAll('.slide'));
+  const slides = screenFilter
+    ? allSlides.filter(s => s.dataset.screen === screenFilter)
+    : allSlides;
+
+  if (slides.length === 0) {
+    document.body.innerHTML = '<div style="display:flex;align-items:center;justify-content:center;height:100vh;color:#E90000;font-family:Oswald,sans-serif;font-size:48px;text-transform:uppercase;letter-spacing:0.1em;">Invalid screen — use ?screen=1, 2, or 3</div>';
+    return;
+  }
+
+  const progress = document.getElementById('progress');
+  slides.forEach(() => {
+    const dot = document.createElement('div');
+    dot.className = 'progress-dot';
+    progress.appendChild(dot);
+  });
+  const dots = Array.from(progress.children);
+
+  let current = 0;
+  const ROTATION_MS = 14000;
+
+  function showSlide(idx) {
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    slides[idx].classList.add('active');
+    dots[idx].classList.add('active');
+  }
+
+  showSlide(0);
+  setInterval(() => {
+    current = (current + 1) % slides.length;
+    showSlide(current);
+  }, ROTATION_MS);
+})();
+</script>
+
+</body>
+</html>
